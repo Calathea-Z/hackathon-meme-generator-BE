@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 router.use(express.json());
 
-const { User } = require('../models');
+const UserModel  = require('../models/UserModel');
 
 //http://localhost:4000/users/
 //index
 router.get('/', async (req, res, next) => {
     try {
-        const allUsers = await User.find({})
+        const allUsers = await UserModel.find({})
         res.status(201).json(allUsers)
     }catch(error){
         res.status(400).json({error: error})
@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
 //Post
 router.post('/', async (req, res, next) => {
     try {
-        const newUser = await User.create(req.body)
+        const newUser = await UserModel.create(req.body)
         res.status(201).json(newUser)
     }catch(error){
         res.status(400).json({error: error})
@@ -30,7 +30,7 @@ router.post('/', async (req, res, next) => {
 //Show
 router.get('/:id', async (req, res, next ) => {
     try {
-        const findUser = await User.findById(req.params.id);
+        const findUser = await UserModel.findById(req.params.id);
         res.status(200).json(findUser);
     } catch (error) {
         res.status(404).json({error: error})
@@ -41,7 +41,7 @@ router.get('/:id', async (req, res, next ) => {
 //Delete
 router.delete('/:id', async (req, res, next ) => {
     try {
-        const deleteUser = await User.findByIdAndDelete(req.params.id);
+        const deleteUser = await UserModel.findByIdAndDelete(req.params.id);
         res.status(200).json(deleteUser);
     } catch(error) {
         res.status(404).json({error: error})
@@ -52,9 +52,11 @@ router.delete('/:id', async (req, res, next ) => {
 //Update
 router.put('/:id', async (req, res, next) => {
     try {
-        const updateUser = await User.findByIdAndUpdate(req.params.id, req.body, {new:true});
+        const updateUser = await UserModel.findByIdAndUpdate(req.params.id, req.body, {new:true});
         res.status(200).json(updateUser);
     } catch(error) {
         res.status(404).json({error: error})
     }
 });
+
+module.exports = router
