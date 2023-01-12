@@ -2,24 +2,25 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
-const postsController = require('./controllers/postsController')
-const usersController = require('./controllers/usersController')
+const PostsController = require('./controllers/postsController')
+const UsersController = require('./controllers/usersController')
 
 require('dotenv').config();
 require('./config/db.connection')   
 
-const { PORT } = process.env;
+const { PORT }  = process.env || 4000
 
 //middleware
 
 app.use(cors()); 
-
 app.use(morgan("dev")); 
 
-app.use('/posts', postsController);
+app.use('/posts', PostsController);
+app.use('/users', UsersController)
 
-app.use('/users', usersController)
+app.get('/posts', (req,res) => { res.redirect('/posts')});
+app.get('/users', (req,res) => { res.redirect('/users')});
 
-app.get('/', (req,res) => { res.redirect('/people')});
-
-app.listen(process.env.PORT || 4000);
+app.listen(PORT, () => {
+    console.log(`listening on port ${PORT}`)
+})
