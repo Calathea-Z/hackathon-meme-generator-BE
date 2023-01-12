@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
-const PostsController = require('./controllers/postsController')
-const UsersController = require('./controllers/usersController')
+const PostsController = require('./controllers/PostsController')
+const UsersController = require('./controllers/UsersController')
 
 require('dotenv').config();
 require('./config/db.connection')   
