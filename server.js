@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
-const peopleController = require('./controllers/people_controller')
+const UsersController = require('./controllers/UsersController');
+const PostsController = require('./controllers/PostsController');
 
 require('dotenv').config();
 require('./config/db.connection')   
@@ -15,8 +16,10 @@ app.use(cors()); //allows for cross origin requests;
 
 app.use(morgan("dev")); //allows for easy logging for devlopment
 
-app.use('/people', peopleController);
+app.use('/posts', PostsController);
 
-app.get('/', (req,res) => { res.redirect('/people')});
+app.use('/users', UsersController);
 
-app.listen(PORT, () =>console.log(`Listening on port: ${PORT}`));
+app.get('/', (req,res) => { res.redirect('/posts')});
+
+app.listen(process.env.PORT || 4000);

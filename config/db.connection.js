@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const {MONGODB_URI} = process.env
 
 mongoose.set('strictQuery', true);
-mongoose.connect(MONGODB_URI)
+mongoose.connect(MONGODB_URI) || 4000
 
 mongoose.connection
   .on("open", () => console.log("You are connected to mongoose"))
